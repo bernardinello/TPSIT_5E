@@ -32,7 +32,7 @@ int numCategorie = 0;                 // Contatore per il numero di categorie es
 void rimuoviNewline(char* str) {
     size_t len = strlen(str); // Calcola la lunghezza della stringa di input
 
-    // Se l'ultimo carattere è un newline (carattere di nuova riga)
+    // Se l'ultimo carattere è un carattere di nuova riga
     if (len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r')) {
         str[len - 1] = '\0'; // Sostituisce il newline con un terminatore di stringa
     }
@@ -107,23 +107,23 @@ int leggiLibriDaCSV(char* nomeFile) {
         rimuoviNewline(buffer); // Pulisce la riga letta
 
         Libro libro; // Crea un nuovo libro
-        char* token = strtok(buffer, ","); // Estrae il primo token (titolo)
+        char* token = strtok(buffer, ","); // Estrae il titolo (token)
         if (token != NULL) {
             strcpy(libro.titolo, token); // Copia il titolo nel libro
         }
-        token = strtok(NULL, ","); // Estrae il secondo token (autore)
+        token = strtok(NULL, ","); // Estrae l'autore
         if (token != NULL) {
             strcpy(libro.autore, token); // Copia l'autore nel libro
         }
-        token = strtok(NULL, ","); // Estrae il terzo token (anno)
+        token = strtok(NULL, ","); // Estrae l'anno
         if (token != NULL) {
             libro.anno = atoi(token); // Converte l'anno da stringa a intero
         }
-        token = strtok(NULL, ","); // Estrae il quarto token (prezzo)
+        token = strtok(NULL, ","); // Estrae il prezzo
         if (token != NULL) {
             libro.prezzo = atof(token); // Converte il prezzo da stringa a float
         }
-        token = strtok(NULL, ","); // Estrae il quinto token (genere)
+        token = strtok(NULL, ","); // Estrae il genere
         if (token != NULL) {
             strcpy(libro.genere, token); // Copia il genere nel libro
         }

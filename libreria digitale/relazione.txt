@@ -1,0 +1,71 @@
+Il programma implementa un sistema per la gestione di un insieme di libri organizzati per categorie. I libri sono letti da un file CSV, e l’utente può cercare i libri per titolo o visualizzare quelli di una determinata categoria. Ogni libro è caratterizzato da un titolo, autore, anno di pubblicazione, prezzo e genere, il quale determina la categoria a cui appartiene.
+L'architettura del programma si basa su due principali strutture dati:  
+Libro: rappresenta un singolo libro con le sue proprietà. 
+Categoria: rappresenta una categoria di libri, ognuna delle quali può contenere un insieme di libri dello stesso genere. 
+Il programma si basa su un file CSV come input. Ogni riga del file contiene le informazioni di un libro, e ogni libro viene organizzato in una categoria in base al suo genere. L'utente può cercare libri per titolo o per categoria.
+
+Progettazione delle funzioni
+1. rimuoviNewline(char* str)
+Questa funzione è utilizzata per pulire una stringa eliminando caratteri di nuova riga (\n o \r) e spazi vuoti all'inizio e alla fine della stringa.
+
+Parametri:
+str: puntatore a una stringa (array di caratteri) che contiene la stringa da pulire.
+Restituzione: nessuna, modifica la stringa in place.
+2. trovaCategoria(char* nome)
+Trova l'indice di una categoria in base al suo nome. Se la categoria non è trovata, restituisce -1.
+Parametri:
+nome: puntatore a una stringa che rappresenta il nome della categoria da cercare.
+Restituzione: indice della categoria se trovata, -1 altrimenti.
+3. aggiungiLibroACategoria(Libro libro)
+Aggiunge un libro a una categoria. Se la categoria non esiste, la crea. Se la categoria esiste già, aggiunge il libro all'elenco di libri per quella categoria.
+
+Parametri:
+libro: un oggetto di tipo Libro che contiene i dati del libro da aggiungere.
+Restituzione: nessuna.
+4. leggiLibriDaCSV(char* nomeFile)
+Legge i dati dal file CSV e aggiunge ogni libro alla sua categoria. Il file CSV deve essere formattato con i seguenti campi: titolo, autore, anno, prezzo, genere.
+
+Parametri:
+nomeFile: puntatore a una stringa che rappresenta il nome del file CSV da cui leggere i libri.
+Restituzione: il numero di libri letti dal file.
+5. stampaLibriCategoria(Categoria* categoria)
+Stampa i dettagli di tutti i libri presenti in una determinata categoria.
+
+Parametri:
+categoria: puntatore a una struttura Categoria che rappresenta la categoria da stampare.
+Restituzione: nessuna.
+6. stampaTutteLeCategorie()
+Stampa i libri di tutte le categorie presenti nel sistema.
+
+Parametri: nessuno.
+Restituzione: nessuna.
+7. cercaLibroPerTitolo(char* titolo)
+Cerca un libro per titolo in tutte le categorie e stampa i dettagli del libro se trovato.
+
+Parametri:
+titolo: puntatore a una stringa che rappresenta il titolo del libro da cercare.
+Restituzione: 1 se il libro è trovato, 0 altrimenti.
+8. cercaLibriPerCategoria(char* nomeCategoria)
+Cerca e stampa tutti i libri appartenenti a una determinata categoria.
+
+Parametri:
+nomeCategoria: puntatore a una stringa che rappresenta il nome della categoria da cercare.
+Restituzione: 1 se la categoria è trovata, 0 altrimenti.
+Strutture dati
+Struttura Libro
+Rappresenta un singolo libro nel sistema.
+
+Campi:
+char titolo[MAX_LEN]: stringa che rappresenta il titolo del libro.
+char autore[MAX_LEN]: stringa che rappresenta l'autore del libro.
+int anno: intero che rappresenta l'anno di pubblicazione del libro.
+float prezzo: valore decimale che rappresenta il prezzo del libro.
+char genere[MAX_LEN]: stringa che rappresenta il genere del libro (usata anche come nome della categoria).
+Struttura Categoria
+Rappresenta una categoria di libri basata sul genere.
+
+Campi:
+char nome[MAX_LEN]: stringa che rappresenta il nome della categoria (solitamente il genere).
+Libro libri[MAX_LIBRI_PER_CATEGORIA]: array di libri appartenenti alla categoria.
+int numLibri: numero di libri attualmente presenti nella categoria.
+

@@ -1,11 +1,9 @@
 #include <stdio.h>       // std in-out
-#include <stdlib.h>      // per utilizzo di certe funzioni: htonl, rand, ....
+#include <stdlib.h>      // per htonl, htons, ...
 #include <sys/socket.h>  // funzioni accept + bind + listen
 #include <sys/types.h>   // funzioni accept
 #include <netinet/in.h>  // definiscono la struttura degli indirizzi 
 #include <string.h>      // funzioni stringhe
-#include <errno.h>       // gestione errori connessione
-#include <ctype.h>       // per caratteri
 #include <unistd.h>      // API dello standard POSIX
 
 #define DIM 50
@@ -29,35 +27,45 @@ int main() {
     
     int socketfd, soa, fromlen = sizeof(servizio);
     char str[DIM];
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
     
+    // Creazione del socket
+    socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd < 0) {
         perror("Errore creazione socket");
         exit(EXIT_FAILURE);
     }
     
+    // Binding del socket
     if (bind(socketfd, (struct sockaddr*)&servizio, sizeof(servizio)) < 0) {
         perror("Errore binding");
         close(socketfd);
         exit(EXIT_FAILURE);
     }
     
+    // Inizio ad ascoltare le richieste
     listen(socketfd, 10);
 
     for (;;) {
         printf("Server in ascolto.....\n");
         fflush(stdout);
-        soa = accept(socketfd, (struct sockaddr*)&servizio, &fromlen);
         
-       /*if (soa < 0) {
+        // Accetta la connessione
+        soa = accept(socketfd, (struct sockaddr*)&servizio, &fromlen);
+        if (soa < 0) {
             perror("Errore in accept");
             continue; // continua a cercare connessioni
         }
-        */
 
+        // Leggi la stringa dal client
         read(soa, str, sizeof(str));
         int palindromo = Palindroma(str);
-        printf("La stringa '%s' è palindroma:\n", str);
+        
+        // Stampa il risultato in modo chiaro
+        if (palindromo) {
+            printf("La stringa '%s' è palindroma.\n", str);
+        } else {
+            printf("La stringa '%s' non è palindroma.\n", str);
+        }
         
         // Invia il risultato al client
         write(soa, &palindromo, sizeof(int));
